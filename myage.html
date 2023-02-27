@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Timer App</title>
+  <style>
+    input[type="date"] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      background-color: #f8f8f8;
+      font-size: 16px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .timer {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    /* Responsive styling */
+    @media only screen and (max-width: 600px) {
+      input[type="date"] {
+        font-size: 14px;
+      }
+      button {
+        font-size: 14px;
+      }
+      .timer {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body onload="startTimer()">
+  <h1>Timer App</h1>
+  <p>Enter two birthdates to calculate the elapsed time:</p>
+  <label for="birthdate1">Birthdate 1:</label>
+  <input type="date" id="birthdate1" name="birthdate1" value="1996-06-05">
+  <label for="timer1" class="timer">Time since birthdate 1:</label>
+  <div id="timer1" class="timer"></div>
+  <label for="birthdate2">Birthdate 2:</label>
+  <input type="date" id="birthdate2" name="birthdate2" value="1999-06-05">
+  <label for="timer2" class="timer">Time since birthdate 2:</label>
+  <div id="timer2" class="timer"></div>
+  <script>
+    var timerInterval1, timerInterval2;
+        
+    function startTimer() {
+      // Get the birthdate1 input value
+      var birthdate1 = document.getElementById("birthdate1").value;
+      // Get the birthdate2 input value
+      var birthdate2 = document.getElementById("birthdate2").value;
+      // Create Date objects with the birthdates
+      var birthdateObj1 = new Date(birthdate1);
+      var birthdateObj2 = new Date(birthdate2);
+      // Start the timers
+      timerInterval1 = setInterval(updateTimer, 1000, birthdateObj1, "timer1");
+      timerInterval2 = setInterval(updateTimer, 1000, birthdateObj2, "timer2");
+    }
+        
+    function updateTimer(birthdateObj, timerId) {
+      // Get the current date
+      var currentDate = new Date();
+      // Calculate the difference in milliseconds between the two dates
+      var diff = currentDate.getTime() - birthdateObj.getTime();
+      // Calculate the number of years, hours, minutes, and seconds
+      var years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+      var hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+      var minutes = Math.floor(diff / (1000 * 60)) % 60;
+      var seconds = Math.floor(diff / 1000) % 60;
+      // Display the result in the appropriate timer element
+      document.getElementById(timerId).innerHTML = years + "y " + hours + "h " + minutes + "m " + seconds + "s";
+    }
+  </script>
+</body>
